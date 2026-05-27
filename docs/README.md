@@ -41,7 +41,7 @@ Pair with `ngrok http 8000` to share externally.
 ## Customization checklist before going live
 
 - [ ] Replace `https://github.com/carlociccarelli/design-standup-bot` URLs with the real repo
-- [ ] Replace `mailto:carlociccarelli@gmail.com` if you want a different contact
+- [ ] Replace `mailto:info@carlociccarelli.com` if you want a different contact
 - [ ] Confirm screenshots are captured and committed
 - [ ] Confirm `DesignStandupBot.dmg` exists (or update the download button to a hosted location)
 - [ ] Open `index.html` in a browser, click every link, scroll the FAQ

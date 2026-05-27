@@ -141,4 +141,4 @@ handling, the bundled policy will be updated and the change noted in release not
 
 ## Contact
 
-Carlo Ciccarelli — `carlociccarelli@gmail.com`
+Carlo Ciccarelli — `info@carlociccarelli.com`
