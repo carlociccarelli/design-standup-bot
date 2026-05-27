@@ -434,15 +434,9 @@
           <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
             Design Standup Bot is ad-hoc signed (no Apple Developer Program). macOS treats it as "unverified" the first time. The bypass takes ~10 seconds and only needs to happen once.
           </p>
-          <p style="font-weight: 600; margin-top: 14px; margin-bottom: 6px;">Method A — Right-click (try this first):</p>
-          <ol style="font-size: 14px; color: var(--text-muted); padding-left: 20px;">
-            <li><strong>Right-click</strong> (or Control-click) <code>DesignStandupBot.app</code> in <code>/Applications</code></li>
-            <li>Choose <strong>Open</strong> from the menu</li>
-            <li>A dialog asks "are you sure?" → click <strong>Open</strong></li>
-          </ol>
-          <p style="font-weight: 600; margin-top: 14px; margin-bottom: 6px;">Method B — System Settings (macOS Sonoma / Sequoia):</p>
+          <p style="font-weight: 600; margin-top: 14px; margin-bottom: 6px;">Method B — System Settings (recommended, works on all current macOS):</p>
           <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 6px;">
-            If you just saw the warning dialog and only have a <em>"Move to Trash" / "Done"</em> option (no <em>Open Anyway</em>), use this path:
+            On macOS <strong>Sonoma, Sequoia, and Tahoe</strong> the initial warning only offers <em>"Move to Trash" / "Done"</em> — no <em>Open Anyway</em>. Use this path:
           </p>
           <ol style="font-size: 14px; color: var(--text-muted); padding-left: 20px;">
             <li>Click <strong>Done</strong> on the warning (NOT "Move to Trash")</li>
@@ -451,6 +445,18 @@
             <li>Click <strong>Open Anyway</strong> next to that message</li>
             <li>Confirm with Touch ID or your password. The app launches and is whitelisted from now on.</li>
           </ol>
+          <p style="font-weight: 600; margin-top: 14px; margin-bottom: 6px;">Method A — Right-click (older macOS only):</p>
+          <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 6px;">
+            On macOS versions older than Sonoma (or systems that haven't received recent Gatekeeper updates), the right-click trick still works:
+          </p>
+          <ol style="font-size: 14px; color: var(--text-muted); padding-left: 20px;">
+            <li><strong>Right-click</strong> (or Control-click) <code>DesignStandupBot.app</code> in <code>/Applications</code></li>
+            <li>Choose <strong>Open</strong> from the menu</li>
+            <li>A dialog asks "are you sure?" → click <strong>Open</strong></li>
+          </ol>
+          <p style="font-size: 13px; color: var(--text-faint); margin-top: 4px;">
+            If your Mac is up to date, Method A no longer shows an "Open" option in the warning — use Method B above.
+          </p>
           <p style="font-size: 13px; color: var(--text-faint); margin-top: 14px;">
             Once you've opened the app once via either method, macOS remembers your choice — subsequent launches happen silently with no prompt.
           </p>
@@ -500,8 +506,8 @@
         <details>
           <summary>macOS says "DesignStandupBot can't be opened" — what now?</summary>
           <p>This is the standard Gatekeeper warning for any Mac app that isn't notarised by Apple (which requires a paid Developer Program membership). Design Standup Bot is ad-hoc signed, so the first launch needs a manual bypass — once, then never again.</p>
-          <p><strong>Try first:</strong> right-click (or Control-click) the app in <code>/Applications</code> → <strong>Open</strong> → confirm in the dialog. This works on most macOS versions.</p>
-          <p><strong>If the warning only offers "Move to Trash" / "Done"</strong> (typical on macOS Sonoma / Sequoia): click <em>Done</em>, then open <strong>System Settings → Privacy &amp; Security</strong>. Scroll down to the message about Design Standup Bot being blocked, click <strong>Open Anyway</strong>, and confirm with Touch ID / password.</p>
+          <p><strong>If you're on a recent macOS</strong> (Sonoma, Sequoia, or Tahoe) the warning only offers <em>"Move to Trash" / "Done"</em>: click <em>Done</em>, then open <strong>System Settings → Privacy &amp; Security</strong>. Scroll down to the message about Design Standup Bot being blocked, click <strong>Open Anyway</strong>, and confirm with Touch ID / password.</p>
+          <p><strong>On older macOS</strong> (or systems without recent Gatekeeper updates): right-click (or Control-click) the app in <code>/Applications</code> → <strong>Open</strong> → confirm in the dialog. This shortcut was removed on newer macOS, so if it doesn't appear, use the path above.</p>
           <p>Either way, the app is whitelisted after the first successful launch — every subsequent open is silent.</p>
         </details>
 
