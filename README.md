@@ -35,9 +35,28 @@ Always download from the landing page:
 
 → **<https://carlociccarelli.github.io/design-standup-bot/>**
 
-The DMG is **ad-hoc signed** (no Apple Developer Program). On first launch,
-right-click the app → **Open** to bypass Gatekeeper one time. Subsequent
-launches are silent.
+The DMG is **ad-hoc signed** (no Apple Developer Program), so macOS will
+warn you the first time you open it. The bypass takes ~10 seconds and
+only needs to happen once:
+
+**Method A — Right-click (try this first)**
+
+1. Right-click (or Control-click) `DesignStandupBot.app` in `/Applications`
+2. Choose **Open** from the menu
+3. Click **Open** in the confirmation dialog
+
+**Method B — System Settings (macOS Sonoma / Sequoia)**
+
+If the warning dialog only offers *"Move to Trash" / "Done"* with no
+*Open Anyway* button, use this path instead:
+
+1. Click **Done** on the warning (NOT *Move to Trash*)
+2. Open **System Settings → Privacy & Security**
+3. Scroll down — you'll see *"DesignStandupBot was blocked from use…"*
+4. Click **Open Anyway**, confirm with Touch ID / password
+
+After either method, macOS whitelists the app — every subsequent launch
+is silent.
 
 > **Note:** there is no `Releases` tab on this repo. The DMG is distributed
 > only via the landing so download attribution stays on a single channel.

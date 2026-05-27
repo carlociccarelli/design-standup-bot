@@ -424,14 +424,37 @@
         <ol>
           <li>Download <code>DesignStandupBot.dmg</code> from the button above.</li>
           <li>Double-click to mount. Drag the app into <code>/Applications</code>.</li>
-          <li>First launch: macOS may show <strong>"DesignStandupBot can't be opened because it is from an unidentified developer"</strong> — this app isn't signed by Apple. To bypass: right-click the app → <strong>Open</strong> → confirm.</li>
+          <li><strong>First launch</strong>: macOS will warn you the app "can't be opened because Apple cannot check it for malicious software". This is expected (see the box below for how to bypass — it only happens once).</li>
           <li>The teal app icon appears in your menu bar. Click it.</li>
           <li>Tap Figma, Jira, GitHub, or Trello on the onboarding screen and follow the setup.</li>
         </ol>
-        <p style="margin-top: 16px; font-size: 14px; color: var(--text-faint);">
-          The Gatekeeper warning is normal for self-distributed Mac apps. Once you've opened it once,
-          macOS remembers your choice — subsequent launches happen without prompt.
-        </p>
+
+        <div style="margin-top: 24px; padding: 20px; background: rgba(46, 182, 187, 0.08); border-radius: 10px; border-left: 3px solid var(--teal-light);">
+          <p style="font-weight: 600; margin-bottom: 8px;">⚠️ First launch — bypass the "can't be opened" warning</p>
+          <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
+            Design Standup Bot is ad-hoc signed (no Apple Developer Program). macOS treats it as "unverified" the first time. The bypass takes ~10 seconds and only needs to happen once.
+          </p>
+          <p style="font-weight: 600; margin-top: 14px; margin-bottom: 6px;">Method A — Right-click (try this first):</p>
+          <ol style="font-size: 14px; color: var(--text-muted); padding-left: 20px;">
+            <li><strong>Right-click</strong> (or Control-click) <code>DesignStandupBot.app</code> in <code>/Applications</code></li>
+            <li>Choose <strong>Open</strong> from the menu</li>
+            <li>A dialog asks "are you sure?" → click <strong>Open</strong></li>
+          </ol>
+          <p style="font-weight: 600; margin-top: 14px; margin-bottom: 6px;">Method B — System Settings (macOS Sonoma / Sequoia):</p>
+          <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 6px;">
+            If you just saw the warning dialog and only have a <em>"Move to Trash" / "Done"</em> option (no <em>Open Anyway</em>), use this path:
+          </p>
+          <ol style="font-size: 14px; color: var(--text-muted); padding-left: 20px;">
+            <li>Click <strong>Done</strong> on the warning (NOT "Move to Trash")</li>
+            <li>Open <strong>System Settings</strong> → <strong>Privacy &amp; Security</strong></li>
+            <li>Scroll down — you'll see <em>"DesignStandupBot was blocked from use because it is not from an identified developer"</em></li>
+            <li>Click <strong>Open Anyway</strong> next to that message</li>
+            <li>Confirm with Touch ID or your password. The app launches and is whitelisted from now on.</li>
+          </ol>
+          <p style="font-size: 13px; color: var(--text-faint); margin-top: 14px;">
+            Once you've opened the app once via either method, macOS remembers your choice — subsequent launches happen silently with no prompt.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -472,6 +495,14 @@
         <details>
           <summary>How do I get a Trello API Key and Token?</summary>
           <p>On a single page at <a href="https://trello.com/app-key">trello.com/app-key</a>: copy the <strong>API Key</strong> at the top, then click the "Token" link below it to generate a user Token (one click, grants read access). Paste both into Design Standup Bot's Settings. Read-only is fine — the app never writes back to Trello.</p>
+        </details>
+
+        <details>
+          <summary>macOS says "DesignStandupBot can't be opened" — what now?</summary>
+          <p>This is the standard Gatekeeper warning for any Mac app that isn't notarised by Apple (which requires a paid Developer Program membership). Design Standup Bot is ad-hoc signed, so the first launch needs a manual bypass — once, then never again.</p>
+          <p><strong>Try first:</strong> right-click (or Control-click) the app in <code>/Applications</code> → <strong>Open</strong> → confirm in the dialog. This works on most macOS versions.</p>
+          <p><strong>If the warning only offers "Move to Trash" / "Done"</strong> (typical on macOS Sonoma / Sequoia): click <em>Done</em>, then open <strong>System Settings → Privacy &amp; Security</strong>. Scroll down to the message about Design Standup Bot being blocked, click <strong>Open Anyway</strong>, and confirm with Touch ID / password.</p>
+          <p>Either way, the app is whitelisted after the first successful launch — every subsequent open is silent.</p>
         </details>
 
         <details>
