@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design Standup Bot — your daily design standup, in the menu bar</title>
+  <meta name="description" content="A native macOS menu bar app that surfaces your Figma mentions, Jira issues, GitHub PRs, and Trello cards in one glanceable popover. No telemetry, no cloud — everything stays on your Mac.">
+  <link rel="icon" type="image/png" href="app-icon.png">
+
+  <style>
+    /* ----- Design tokens ---------------------------------------------------- */
+    :root {
+      --teal:        #2EB6BB;
+      --teal-strong: #084045;
+      --teal-light:  #6FDFE2;
+      --bg:          #0E1517;
+      --surface:     #18242A;
+      --surface-2:   #1E2D33;
+      --border:      rgba(255, 255, 255, 0.08);
+      --text:        #E8F0F1;
+      --text-muted:  rgba(232, 240, 241, 0.7);
+      --text-faint:  rgba(232, 240, 241, 0.45);
+      --max-width:   1080px;
+      --radius:      14px;
+      --shadow-lg:   0 30px 80px -20px rgba(0, 0, 0, 0.6);
+    }
+
+    /* ----- Reset & base ----------------------------------------------------- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a { color: var(--teal-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; display: block; }
+    section { padding: 96px 24px; }
+    .container { max-width: var(--max-width); margin: 0 auto; }
+
+    /* ----- Top nav ---------------------------------------------------------- */
+    .nav {
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
+    .nav-links { margin-left: auto; display: flex; gap: 24px; font-size: 15px; color: var(--text-muted); }
+    .nav-links a { color: inherit; }
+
+    /* ----- Hero ------------------------------------------------------------- */
+    .hero {
+      padding: 48px 24px 80px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at top, rgba(46, 182, 187, 0.12), transparent 60%),
+        var(--bg);
+    }
+    .hero img.app-icon {
+      width: 96px; height: 96px;
+      border-radius: 22%;
+      box-shadow: 0 18px 40px -10px rgba(46, 182, 187, 0.4);
+      margin: 0 auto 32px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      max-width: 760px;
+      margin: 0 auto 20px;
+    }
+    .hero h1 .accent { color: var(--teal-light); }
+    .hero p.lede {
+      font-size: clamp(17px, 2vw, 20px);
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 36px;
+    }
+    .cta-row {
+      display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+    }
+    .button {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      border: none; cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .button-primary {
+      background: var(--teal-strong);
+      color: white;
+      box-shadow: 0 8px 24px -6px rgba(8, 64, 69, 0.6);
+    }
+    .button-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -6px rgba(8, 64, 69, 0.8); text-decoration: none; }
+    .button-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .button-secondary:hover { background: var(--surface); text-decoration: none; }
+    .meta {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--text-faint);
+    }
+
+    /* ----- Hero screenshot -------------------------------------------------- */
+    .hero-shot {
+      margin-top: 64px;
+      display: flex; justify-content: center;
+    }
+    .hero-shot img {
+      max-width: 460px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* ----- Features grid ---------------------------------------------------- */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+    .feature-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: rgba(46, 182, 187, 0.15);
+      color: var(--teal-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+    .feature h3 {
+      font-size: 18px; margin-bottom: 8px; font-weight: 600;
+    }
+    .feature p {
+      color: var(--text-muted); font-size: 15px;
+    }
+
+    /* ----- Section header --------------------------------------------------- */
+    .section-header { text-align: center; max-width: 640px; margin: 0 auto 16px; }
+    .section-header h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+    }
+    .section-header p { color: var(--text-muted); }
+
+    /* ----- Gallery ---------------------------------------------------------- */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .gallery figure {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .gallery img { display: block; width: 100%; }
+    .gallery figcaption {
+      padding: 16px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ----- Privacy block ---------------------------------------------------- */
+    .privacy {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      margin-top: 48px;
+    }
+    .privacy h2 {
+      font-size: 24px;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .privacy h2::before {
+      content: '🔒';
+      font-size: 28px;
+    }
+    .privacy ul {
+      list-style: none;
+      margin-top: 12px;
+    }
+    .privacy li {
+      padding: 8px 0 8px 28px;
+      position: relative;
+      color: var(--text-muted);
+    }
+    .privacy li::before {
+      content: '✓';
+      position: absolute; left: 0;
+      color: var(--teal-light);
+      font-weight: 700;
+    }
+
+    /* ----- FAQ -------------------------------------------------------------- */
+    .faq { margin-top: 48px; }
+    .faq details {
+      border-top: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .faq details:last-child { border-bottom: 1px solid var(--border); }
+    .faq summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 17px;
+      list-style: none;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: '+';
+      font-size: 24px;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+    }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq p {
+      margin-top: 12px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    /* ----- Install instructions ------------------------------------------- */
+    .install {
+      background: var(--surface-2);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-top: 48px;
+    }
+    .install ol {
+      margin-top: 16px; padding-left: 24px;
+    }
+    .install li { padding: 6px 0; color: var(--text-muted); }
+    .install code {
+      background: rgba(255,255,255,0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: ui-monospace, SF Mono, Menlo, monospace;
+      font-size: 14px;
+    }
+
+    /* ----- Footer ----------------------------------------------------------- */
+    footer {
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--text-faint);
+      font-size: 14px;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--text-muted); }
+
+    /* ----- Responsive tweaks ----------------------------------------------- */
+    @media (max-width: 600px) {
+      section { padding: 64px 18px; }
+      .hero { padding: 24px 18px 48px; }
+      .privacy, .install { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Nav ============================================================ -->
+  <nav class="nav">
+    <div class="nav-logo">
+      <img src="app-icon.png" alt="Design Standup Bot app icon">
+      Design Standup Bot
+    </div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </nav>
+
+  <!-- ===== Hero =========================================================== -->
+  <header class="hero">
+    <img src="app-icon.png" alt="" class="app-icon" aria-hidden="true">
+    <h1>Your daily design standup, <span class="accent">in the menu bar.</span></h1>
+    <p class="lede">
+      One click surfaces every Figma mention, Jira issue, GitHub PR review, and
+      Trello card waiting on you — grouped, glanceable, actionable. Built for
+      UX leads who don't want to start the day with seven browser tabs.
+    </p>
+    <div class="cta-row">
+      <a class="button button-primary" href="DesignStandupBot.dmg" download>
+        ↓ Download for macOS
+      </a>
+      <a class="button button-secondary" href="#install">How to install</a>
+    </div>
+    <p class="meta">
+      macOS 14 Sonoma or later · Universal (Apple Silicon + Intel) · Free
+    </p>
+
+    <div class="hero-shot">
+      <img src="screenshots/01-hero-digest.png" alt="Design Standup Bot popover showing a unified digest across Figma, Jira, GitHub, and Trello">
+    </div>
+  </header>
+
+  <!-- ===== Features ======================================================= -->
+  <section id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Designed for the morning ritual.</h2>
+        <p>No dashboards, no logins, no context switches. Just the things that need you, in one place.</p>
+      </div>
+
+      <div class="features-grid">
+        <article class="feature">
+          <div class="feature-icon">📥</div>
+          <h3>Aggregated digest</h3>
+          <p>Figma mentions, Jira issues, GitHub PRs, and Trello cards — grouped by source, sorted by recency. One scroll covers what used to be 20 minutes of tab-hopping.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon">🔔</div>
+          <h3>Native macOS notifications</h3>
+          <p>Get notified when a new mention, issue, PR review, or card lands — with one-click deep linking. Toggle per source.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon">💤</div>
+          <h3>Snooze for the day</h3>
+          <p>Tap to hide an item until tomorrow. Persists across app restarts, resets at midnight.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon">⚡</div>
+          <h3>Background refresh</h3>
+          <p>Polls every 15/30/60 minutes (your choice). Pauses on sleep, resumes on wake.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon">🎯</div>
+          <h3>Works for any Jira user</h3>
+          <p>No board admin required. Uses a universal JQL that surfaces what's assigned to you plus mentions you're watching.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon">♿</div>
+          <h3>Built accessible</h3>
+          <p>VoiceOver labels everywhere, WCAG AA contrast in both modes, Reduce Motion respected. Not an afterthought.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Gallery ======================================================== -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2>What it looks like.</h2>
+        <p>The whole app lives in one 400×640 popover. No window management, no overhead.</p>
+      </div>
+
+      <div class="gallery">
+        <figure>
+          <img src="screenshots/02-settings-connected.png" alt="Settings panel with Figma, Jira, GitHub, and Trello service cards configured">
+          <figcaption>Settings — every connected service and notification preferences in one place.</figcaption>
+        </figure>
+        <figure>
+          <img src="screenshots/03-onboarding.png" alt="Onboarding screen with four service tiles to choose from">
+          <figcaption>Onboarding — tap any of the four services to start configuring it.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Privacy ======================================================== -->
+  <section id="privacy">
+    <div class="container">
+      <div class="privacy">
+        <h2>Your data stays on your Mac.</h2>
+        <p>This app has no backend. There is no "us" server. Nothing is collected, sold, or shared.</p>
+        <ul>
+          <li>No analytics, no telemetry, no crash reporting</li>
+          <li>No third-party SDKs of any kind</li>
+          <li>Tokens stored in the macOS Keychain — never logged, never transmitted off-device</li>
+          <li>Cache pruned after 30 days, locally</li>
+          <li>Network requests only to api.figma.com, your Jira tenant, api.github.com, and api.trello.com — nowhere else</li>
+        </ul>
+        <p style="margin-top: 20px;">
+          Read the full <a href="https://github.com/carlociccarelli/design-standup-bot/blob/main/PRIVACY.md">Privacy Policy</a>
+          or the <a href="https://github.com/carlociccarelli/design-standup-bot/blob/main/THIRD-PARTY-COMPLIANCE.md">third-party compliance notes</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Install ======================================================== -->
+  <section id="install">
+    <div class="container">
+      <div class="section-header">
+        <h2>Installing.</h2>
+        <p>Local distribution, not from the App Store. Here's what to expect.</p>
+      </div>
+
+      <div class="install">
+        <ol>
+          <li>Download <code>DesignStandupBot.dmg</code> from the button above.</li>
+          <li>Double-click to mount. Drag the app into <code>/Applications</code>.</li>
+          <li>First launch: macOS may show <strong>"DesignStandupBot can't be opened because it is from an unidentified developer"</strong> — this app isn't signed by Apple. To bypass: right-click the app → <strong>Open</strong> → confirm.</li>
+          <li>The teal app icon appears in your menu bar. Click it.</li>
+          <li>Tap Figma, Jira, GitHub, or Trello on the onboarding screen and follow the setup.</li>
+        </ol>
+        <p style="margin-top: 16px; font-size: 14px; color: var(--text-faint);">
+          The Gatekeeper warning is normal for self-distributed Mac apps. Once you've opened it once,
+          macOS remembers your choice — subsequent launches happen without prompt.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ============================================================ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-header">
+        <h2>Questions.</h2>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>How do I get a Figma Personal Access Token?</summary>
+          <p>In Figma: click your avatar (top right) → Settings → Security → Personal access tokens → Generate new token. When prompted for scopes, grant at minimum: <strong>File content (read-only)</strong> and <strong>Team library content (read-only)</strong>. Paste the token into Design Standup Bot's Settings.</p>
+        </details>
+
+        <details>
+          <summary>Where do I find my Figma Team ID?</summary>
+          <p>Open your Figma team in the browser. The URL looks like <code>figma.com/files/team/849554081353053086/...</code> — the long number is your Team ID. Alternatively, leave Team ID empty and paste individual file URLs in the "File keys" field — works for any Figma user.</p>
+        </details>
+
+        <details>
+          <summary>How do I get a Jira API token?</summary>
+          <p>Visit <a href="https://id.atlassian.com/manage-profile/security/api-tokens">id.atlassian.com/manage-profile/security/api-tokens</a> → Create API token. The base URL is your Atlassian subdomain, e.g. <code>https://your-team.atlassian.net</code>. Your email is the one you sign in to Atlassian with.</p>
+        </details>
+
+        <details>
+          <summary>Will I need to be a Jira admin?</summary>
+          <p>No. The app uses a JQL that works for any Jira user: <code>assignee = currentUser() OR (watcher = currentUser() AND updated >= -7d)</code>. No board membership or admin permissions required.</p>
+        </details>
+
+        <details>
+          <summary>How do I get a GitHub Personal Access Token?</summary>
+          <p>On GitHub: click your avatar (top right) → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token. Grant the <strong>repo</strong> scope (read-only is fine; we never write back). For GitHub Enterprise, paste your API base URL (e.g. <code>https://github.acme.com/api/v3</code>) in the optional Enterprise URL field. You can also limit the digest to specific repos by entering <code>owner/repo</code> one per line.</p>
+        </details>
+
+        <details>
+          <summary>How do I get a Trello API Key and Token?</summary>
+          <p>On a single page at <a href="https://trello.com/app-key">trello.com/app-key</a>: copy the <strong>API Key</strong> at the top, then click the "Token" link below it to generate a user Token (one click, grants read access). Paste both into Design Standup Bot's Settings. Read-only is fine — the app never writes back to Trello.</p>
+        </details>
+
+        <details>
+          <summary>Why does macOS keep asking me for my login password?</summary>
+          <p>If you see repeated Keychain prompts during development builds, that's because the code-signing identity changes between builds, and macOS treats each new signature as a different app requesting Keychain access. In the distributed DMG (single signature, stable), the prompt happens once at first launch — pick "Always Allow" and it won't ask again.</p>
+        </details>
+
+        <details>
+          <summary>Is this open source?</summary>
+          <p>Source is available <a href="https://github.com/carlociccarelli/design-standup-bot">on GitHub</a>. Built with SwiftUI + AppKit, MIT-style use permitted.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ========================================================= -->
+  <footer>
+    <p>
+      Built by Carlo Ciccarelli — <a href="mailto:carlociccarelli@gmail.com">carlociccarelli@gmail.com</a><br>
+      <a href="https://github.com/carlociccarelli/design-standup-bot/blob/main/PRIVACY.md">Privacy</a> ·
+      <a href="https://github.com/carlociccarelli/design-standup-bot">Source</a> ·
+      v1.0
+    </p>
+  </footer>
+
+</body>
+</html>
