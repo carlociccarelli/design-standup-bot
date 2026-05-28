@@ -164,6 +164,9 @@
     .meta { margin-top: 20px; font-size: 13px; color: var(--text-faint); display: flex; flex-wrap: wrap; gap: 8px 14px; }
     .meta span { display: inline-flex; align-items: center; gap: 6px; }
     .meta span::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--teal); }
+    .dl-help { margin-top: 14px; font-size: 13px; color: var(--text-faint); }
+    .dl-help a { color: var(--text-muted); text-decoration: underline; text-underline-offset: 2px; }
+    .button .arch-sub { font-weight: 500; opacity: 0.75; font-size: 12px; }
 
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -460,7 +463,7 @@
         <a href="#how">How it works</a>
         <a href="#privacy">Privacy</a>
         <a href="#faq">FAQ</a>
-        <a class="nav-cta" href="DesignStandupBot.dmg" download>Download</a>
+        <a class="nav-cta" href="#download">Download</a>
       </div>
     </nav>
   </div>
@@ -477,16 +480,22 @@
           seven browser tabs.
         </p>
         <div class="cta-row">
-          <a class="button button-primary" href="DesignStandupBot.dmg" download>
+          <a class="button button-primary" href="DesignStandupBot-AppleSilicon.dmg" download>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
-            Download for macOS
+            Apple Silicon
           </a>
-          <a class="button button-secondary" href="#install">How to install</a>
+          <a class="button button-secondary" href="DesignStandupBot-Intel.dmg" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+            Intel
+          </a>
         </div>
+        <p class="dl-help">
+          Macs from 2020 onward are Apple Silicon (M1–M4). <a href="#which">Not sure which you have?</a>
+        </p>
         <p class="meta">
           <span>macOS 14 Sonoma or later</span>
-          <span>Apple Silicon</span>
-          <span>~1.4 MB</span>
+          <span>Apple Silicon &amp; Intel</span>
+          <span>Free</span>
         </p>
       </div>
 
@@ -698,7 +707,7 @@
 
       <div class="install">
         <ol class="steps-list">
-          <li>Download <code>DesignStandupBot.dmg</code> and double-click to mount it.</li>
+          <li>Download the DMG for your chip (<strong>Apple Silicon</strong> or <strong>Intel</strong>) and double-click to mount it.</li>
           <li>Drag the app into <code>/Applications</code>.</li>
           <li><strong>First launch:</strong> macOS blocks unsigned-by-Apple apps. Bypass it once using the box below.</li>
           <li>Click the teal icon in your menu bar and connect your first service.</li>
@@ -734,6 +743,11 @@
       </div>
 
       <div class="faq">
+        <details>
+          <summary>Apple Silicon or Intel — which download do I need?</summary>
+          <p>Click the <strong>Apple menu → About This Mac</strong>. If you see <strong>“Chip: Apple M1/M2/M3/M4”</strong>, grab the <strong>Apple Silicon</strong> build. If you see <strong>“Processor: Intel”</strong>, grab the <strong>Intel</strong> build. Every Mac sold from late 2020 onward is Apple Silicon. Picking the wrong one shows a “can’t be opened” error — just download the other build.</p>
+        </details>
+
         <details>
           <summary>How do I get a Figma Personal Access Token?</summary>
           <p>In Figma: click your avatar (top right) → Settings → Security → Personal access tokens → Generate new token. Grant at minimum <strong>File content (read-only)</strong> and <strong>Team library content (read-only)</strong>. Paste it into Design Standup Bot's Settings.</p>
@@ -779,19 +793,25 @@
   </section>
 
   <!-- ===== Final CTA ====================================================== -->
-  <section class="final-cta">
+  <section class="final-cta" id="download">
     <div class="final-cta-inner">
       <img src="app-icon.png" alt="Design Standup Bot app icon">
       <h2>See your whole day in one click.</h2>
-      <p>Free, native, and entirely on your Mac. No account, no tracking, no catch.</p>
+      <p>Free, native, and entirely on your Mac. No account, no tracking, no catch. Pick the build for your chip:</p>
       <div class="cta-row" style="justify-content:center;">
-        <a class="button button-primary" href="DesignStandupBot.dmg" download>
+        <a class="button button-primary" href="DesignStandupBot-AppleSilicon.dmg" download>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
-          Download for macOS
+          Apple Silicon
         </a>
-        <a class="button button-secondary" href="#install">How to install</a>
+        <a class="button button-secondary" href="DesignStandupBot-Intel.dmg" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+          Intel
+        </a>
       </div>
-      <p style="font-size:13px; color: var(--text-faint); margin-top: 18px;">macOS 14 Sonoma or later · Apple Silicon</p>
+      <p class="dl-help" id="which">
+        <strong>Which one?</strong> Apple menu  → About This Mac. “Chip: Apple M1/M2/M3/M4” → Apple Silicon. “Processor: Intel” → Intel.
+      </p>
+      <p style="font-size:13px; color: var(--text-faint); margin-top: 14px;">macOS 14 Sonoma or later · Free</p>
     </div>
   </section>
 
