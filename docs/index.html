@@ -362,16 +362,22 @@
     .privacy-head .lock svg { width: 24px; height: 24px; }
     .privacy-head p { color: var(--text-muted); }
     .privacy ul { list-style: none; }
-    .privacy li { padding: 9px 0 9px 32px; position: relative; color: var(--text-muted); font-size: 15px; }
+    .privacy li { padding: 8px 0 8px 38px; position: relative; color: var(--text-muted); font-size: 15px; }
+    /* Clean check inside a subtle teal chip — mirrors the app's icon chips
+       instead of a heavy filled circle. */
     .privacy li::before {
-      content: '\e2e6'; /* task_alt */
+      content: '\e5ca'; /* check */
       font-family: 'Material Symbols Rounded';
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
-      font-size: 17px; line-height: 1;
+      font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 20;
+      font-size: 15px; line-height: 1;
       color: var(--teal-light);
-      position: absolute; left: 0; top: 10px;
-      background: none; -webkit-mask: none; mask: none;
-      width: auto; height: auto;
+      position: absolute; left: 0; top: 6px;
+      width: 24px; height: 24px;
+      border-radius: 8px;
+      background: rgba(46, 182, 187, 0.12);
+      border: 1px solid rgba(46, 182, 187, 0.22);
+      display: flex; align-items: center; justify-content: center;
+      -webkit-mask: none; mask: none;
     }
     @media (max-width: 800px) { .privacy { grid-template-columns: 1fr; padding: 32px; gap: 28px; } }
 
