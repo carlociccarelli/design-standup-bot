@@ -174,11 +174,50 @@
 
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-      .hero { text-align: center; }
-      .hero p.lede { margin-left: auto; margin-right: auto; }
-      .cta-row { justify-content: center; }
-      .meta { justify-content: center; }
+      /* Never centre-align text on mobile — left-aligned is more readable */
       .hero-visual { order: 2; }
+    }
+
+    /* ====================================================================
+       Mobile — general layout
+    ==================================================================== */
+    @media (max-width: 640px) {
+      section { padding: 72px 20px; }
+
+      .section-header { margin-bottom: 40px; }
+      .section-header p { font-size: 16px; }
+
+      /* Hero */
+      .hero { padding: 52px 20px 72px; }
+      .hero h1 { font-size: clamp(32px, 9vw, 48px); }
+      .hero p.lede { font-size: 16px; }
+
+      /* Download buttons stack vertically, full-width */
+      .cta-row { flex-direction: column; gap: 10px; }
+      .cta-row .button { width: 100%; justify-content: center; }
+
+      /* Terminal: wrap long commands instead of scrolling off-screen */
+      .terminal {
+        white-space: pre-wrap;
+        word-break: break-all;
+        overflow-x: unset;
+      }
+
+      /* Install & callout */
+      .install { padding: 24px 20px; }
+      .callout { padding: 18px; }
+
+      /* Privacy box */
+      .privacy { padding: 28px 20px; gap: 24px; }
+
+      /* Trust chips */
+      .chip { font-size: 13px; padding: 8px 14px; }
+
+      /* FAQ */
+      .faq summary { font-size: 15px; }
+
+      /* Final CTA */
+      .final-cta p { font-size: 16px; }
     }
 
     /* ====================================================================
