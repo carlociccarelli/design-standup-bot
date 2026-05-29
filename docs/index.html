@@ -116,17 +116,21 @@
       padding: 72px 24px 96px;
       position: relative;
       overflow: hidden;
+      /* Vertically centre content in the viewport (minus nav ~64px) */
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
     }
     .hero::before {
       content: "";
-      position: absolute; inset: 0;
+      position: absolute; inset: 0; z-index: 0;
       background:
         radial-gradient(60% 50% at 70% 0%, rgba(46, 182, 187, 0.16), transparent 70%),
         radial-gradient(50% 60% at 10% 20%, rgba(46, 182, 187, 0.07), transparent 70%);
       pointer-events: none;
     }
     .hero-grid {
-      max-width: var(--max-width); margin: 0 auto;
+      width: 100%; max-width: var(--max-width); margin: 0 auto;
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
       gap: 56px; align-items: center;
