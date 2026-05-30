@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — Design Standup</title>
+  <meta name="description" content="Design Standup privacy policy. Everything stays on your Mac — no analytics, no telemetry, no server.">
+  <link rel="icon" type="image/png" href="app-icon.png">
+  <link rel="canonical" href="https://designstandup.app/privacy">
+
+  <style>
+    :root {
+      --teal:        #2EB6BB;
+      --teal-strong: #0A4d52;
+      --teal-light:  #6FDFE2;
+      --bg:          #0B1113;
+      --bg-2:        #0E1719;
+      --surface:     #151F23;
+      --surface-2:   #1B282D;
+      --border:      rgba(255, 255, 255, 0.07);
+      --border-2:    rgba(255, 255, 255, 0.12);
+      --text:        #EAF1F2;
+      --text-muted:  rgba(234, 241, 242, 0.66);
+      --text-faint:  rgba(234, 241, 242, 0.40);
+      --max-width:   760px;
+      --radius:      16px;
+      --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a { color: var(--teal-light); text-decoration: none; transition: color 0.15s var(--ease); }
+    a:hover { color: var(--teal); }
+    :focus-visible { outline: 2px solid var(--teal-light); outline-offset: 3px; border-radius: 4px; }
+
+    /* Nav */
+    .nav-wrap {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(11, 17, 19, 0.82);
+      backdrop-filter: saturate(160%) blur(16px);
+      -webkit-backdrop-filter: saturate(160%) blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      padding: 16px 24px;
+      display: flex; align-items: center; gap: 12px;
+      max-width: 1120px; margin: 0 auto;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; color: var(--text); }
+    .nav-logo img { width: 30px; height: 30px; border-radius: 7px; }
+    .nav-back {
+      margin-left: auto;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 14px; color: var(--text-muted);
+      transition: color 0.15s var(--ease);
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* Content */
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 64px 24px 120px;
+    }
+
+    .page-header {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      padding: 5px 11px;
+      border: 1px solid var(--border-2);
+      border-radius: 999px;
+      background: rgba(46, 182, 187, 0.06);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .meta {
+      font-size: 14px;
+      color: var(--text-faint);
+    }
+
+    /* Summary card */
+    .summary-card {
+      background: rgba(46, 182, 187, 0.06);
+      border: 1px solid rgba(46, 182, 187, 0.18);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 48px;
+    }
+    .summary-card h2 {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 16px;
+    }
+    .summary-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .summary-card li {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+    .summary-card li::before {
+      content: "✓";
+      color: var(--teal-light);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Sections */
+    .prose h2 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+    .prose h2:first-child { margin-top: 0; }
+    .prose p {
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .prose p:last-child { margin-bottom: 0; }
+    .prose ul, .prose ol {
+      color: var(--text-muted);
+      padding-left: 20px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .prose code {
+      font-family: "SF Mono", "Fira Mono", monospace;
+      font-size: 13px;
+      background: var(--surface-2);
+      color: var(--teal-light);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .prose hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+    .prose a { color: var(--teal-light); }
+    .prose a:hover { color: var(--teal); }
+
+    /* Data table */
+    .data-table-wrap {
+      overflow-x: auto;
+      margin: 20px 0 24px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th {
+      text-align: left;
+      padding: 12px 16px;
+      background: var(--surface);
+      color: var(--text-faint);
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    td {
+      padding: 12px 16px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      vertical-align: top;
+    }
+    td code { font-size: 12px; }
+    tr:last-child td { border-bottom: none; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-faint);
+    }
+    footer a { color: var(--text-muted); }
+    footer a:hover { color: var(--text); }
+
+    @media (max-width: 640px) {
+      main { padding: 40px 20px 80px; }
+      .summary-card { padding: 20px; }
+      th, td { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-wrap">
+    <nav class="nav" aria-label="Site navigation">
+      <a href="/" class="nav-logo">
+        <img src="app-icon.png" alt="Design Standup icon" width="30" height="30">
+        Design Standup
+      </a>
+      <a href="/" class="nav-back" aria-label="Back to home">← Back</a>
+    </nav>
+  </div>
+
+  <main>
+    <header class="page-header">
+      <div class="eyebrow">Legal</div>
+      <h1>Privacy Policy</h1>
+      <p class="meta">Last updated: 29 May 2026 &nbsp;·&nbsp; Author: Carlo Ciccarelli</p>
+    </header>
+
+    <div class="summary-card" role="note" aria-label="Plain-English summary">
+      <h2>Plain-English summary</h2>
+      <ul>
+        <li>Everything stays on your Mac. No analytics, no telemetry, no crash reports.</li>
+        <li>We only talk to the APIs you explicitly connect: Figma, Jira, GitHub, and Trello.</li>
+        <li>Your tokens live in the macOS Keychain. Your settings live in your local UserDefaults.</li>
+        <li>Cached items live in your app's sandboxed Application Support folder, pruned after 30 days.</li>
+        <li>No data is ever sent to us. There is no "us" server.</li>
+      </ul>
+    </div>
+
+    <div class="prose">
+
+      <h2>What data is handled</h2>
+      <p>The app handles only data you provide directly:</p>
+
+      <div class="data-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Why</th>
+              <th>Stored where</th>
+              <th>Retention</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Figma Personal Access Token</td>
+              <td>Auth header on Figma API requests</td>
+              <td>macOS Keychain</td>
+              <td>Until you Disconnect or remove the app</td>
+            </tr>
+            <tr>
+              <td>Figma Team ID</td>
+              <td>URL path for Figma API</td>
+              <td>UserDefaults</td>
+              <td>Same</td>
+            </tr>
+            <tr>
+              <td>Figma File Keys (optional)</td>
+              <td>URL path for Figma API</td>
+              <td>UserDefaults</td>
+              <td>Same</td>
+            </tr>
+            <tr>
+              <td>Jira API Token</td>
+              <td>Basic Auth header on Jira API requests</td>
+              <td>macOS Keychain</td>
+              <td>Same</td>
+            </tr>
+            <tr>
+              <td>Jira Base URL</td>
+              <td>Host for Jira API requests</td>
+              <td>UserDefaults</td>
+              <td>Same</td>
+            </tr>
+            <tr>
+              <td>Jira User Email</td>
+              <td>Basic Auth identity</td>
+              <td>UserDefaults</td>
+              <td>Same</td>
+            </tr>
+            <tr>
+              <td>GitHub Personal Access Token</td>
+              <td>Bearer auth header on GitHub API requests</td>
+              <td>macOS Keychain</td>
+              <td>Same</td>
+            </tr>
+            <tr>
+              <td>GitHub Enterprise URL (optional)</td>
+              <td>Host for GitHub API requests</td>
+              <td>UserDefaults</td>
+              <td>Same</td>
+            </tr>
+            <tr>
+              <td>GitHub Repo allow-list (optional)</td>
+              <td>Filter for GitHub Search API query</td>
+              <td>UserDefaults</td>
+              <td>Same</td>
+            </tr>
+            <tr>
+              <td>Trello API Key</td>
+              <td>Query string <code>?key=…</code> on Trello API requests</td>
+              <td>macOS Keychain</td>
+              <td>Same</td>
+            </tr>
+            <tr>
+              <td>Trello User Token</td>
+              <td>Query string <code>?token=…</code> on Trello API requests</td>
+              <td>macOS Keychain</td>
+              <td>Same</td>
+            </tr>
+            <tr>
+              <td>Cached digest items</td>
+              <td>Offline display + new-item detection</td>
+              <td>App sandbox: <code>~/Library/Containers/com.designstandupbot/Data/Library/Application Support/cache/items.json</code></td>
+              <td>Items older than 30 days pruned on every save</td>
+            </tr>
+            <tr>
+              <td>Notification preferences</td>
+              <td>Per-source enable flags</td>
+              <td>UserDefaults</td>
+              <td>Same</td>
+            </tr>
+            <tr>
+              <td>Snooze + read state</td>
+              <td>Local UX state</td>
+              <td>Cached items JSON</td>
+              <td>Snooze resets at midnight; read state preserved</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>No background collection occurs. The app does not request location, contacts, calendar, microphone, camera, or any other system data.</p>
+
+      <hr>
+
+      <h2>What data leaves your device</h2>
+      <p>Network requests are made <strong>only</strong> to:</p>
+      <ul>
+        <li><code>api.figma.com</code> — only when Figma credentials are configured and a refresh occurs</li>
+        <li><code>your-tenant.atlassian.net</code> — the host you configured, only when Jira credentials are configured</li>
+        <li><code>api.github.com</code> (or your GitHub Enterprise host) — only when GitHub credentials are configured</li>
+        <li><code>api.trello.com</code> — only when Trello credentials are configured and a refresh occurs</li>
+      </ul>
+      <p>These requests carry your credentials in standard auth artifacts. Figma, Atlassian, GitHub, and Trello's own privacy policies govern how they handle those requests on their end.</p>
+      <p>No requests are made to any other host. No requests are made to a server owned by the app author or any third party.</p>
+
+      <hr>
+
+      <h2>What we do not do</h2>
+      <ul>
+        <li>No analytics (no Mixpanel, Segment, Amplitude, Firebase, or anything similar)</li>
+        <li>No crash reporting (no Sentry, Crashlytics, or anything similar)</li>
+        <li>No advertising SDKs</li>
+        <li>No third-party SDKs of any kind</li>
+        <li>No "phone home" requests to check for updates</li>
+        <li>No data resale or sharing</li>
+      </ul>
+
+      <hr>
+
+      <h2>macOS permissions</h2>
+      <p>The app requests permission for:</p>
+      <ul>
+        <li><strong>Notifications</strong> — to surface new mentions from your connected services. You can revoke this in System Settings → Notifications at any time.</li>
+        <li><strong>Network client</strong> (sandbox entitlement) — required for any API calls.</li>
+      </ul>
+      <p>The app does <em>not</em> request: Full Disk Access, Accessibility, Screen Recording, Camera, Microphone, Contacts, Calendar, Photos, or Location.</p>
+
+      <hr>
+
+      <h2>Third-party services</h2>
+      <p>When you connect Figma, Jira, GitHub, or Trello, you interact with their services subject to their own terms:</p>
+      <ul>
+        <li><a href="https://www.figma.com/legal/privacy/" rel="noopener">Figma Privacy Policy</a></li>
+        <li><a href="https://www.atlassian.com/legal/privacy-policy" rel="noopener">Atlassian (Jira / Trello) Privacy Policy</a></li>
+        <li><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub Privacy Statement</a></li>
+      </ul>
+      <p>Design Standup has no user account, no server, and no backend. There is no third-party processor.</p>
+
+      <hr>
+
+      <h2>Your rights and control</h2>
+      <ul>
+        <li><strong>Disconnect a service</strong> — Settings → tap "Disconnect" on the service card. This deletes the token from Keychain and the IDs/URLs from UserDefaults.</li>
+        <li><strong>Stop notifications</strong> — Settings → toggle "Enable notifications" off, or revoke at the system level in System Settings → Notifications.</li>
+        <li><strong>Delete all local data</strong> — quit the app and remove the app bundle. The sandbox container at <code>~/Library/Containers/com.designstandupbot/</code> contains all app data and is removed when you drag the app to Trash and empty it.</li>
+      </ul>
+
+      <hr>
+
+      <h2>Children</h2>
+      <p>Design Standup is a professional tool for designers and developers. It is not directed at children under 13 and does not knowingly handle data from them.</p>
+
+      <hr>
+
+      <h2>Changes to this policy</h2>
+      <p>The "Last updated" date at the top of this page reflects the most recent change. If a future release materially changes data handling, the policy will be updated and the change noted in release notes.</p>
+
+      <hr>
+
+      <h2>Contact</h2>
+      <p>Carlo Ciccarelli — <a href="mailto:info@carlociccarelli.com">info@carlociccarelli.com</a></p>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Carlo Ciccarelli &nbsp;·&nbsp; <a href="/">Design Standup</a></p>
+  </footer>
+
+</body>
+</html>

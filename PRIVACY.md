@@ -1,10 +1,13 @@
-# Privacy Policy — Design Standup Bot
+# Privacy Policy — Design Standup
 
-**Last updated:** 25 May 2026 (revised same day for GitHub integration)  
+**Last updated:** 29 May 2026
 **Author:** Carlo Ciccarelli
 
-This document describes what data Design Standup Bot handles, where it lives,
+This document describes what data Design Standup handles, where it lives,
 and what we never do with it. It applies to all distributions of the macOS app.
+
+The canonical, always-up-to-date version of this policy is at:
+**https://designstandup.app/privacy**
 
 ---
 
@@ -13,7 +16,7 @@ and what we never do with it. It applies to all distributions of the macOS app.
 - Everything stays on your Mac. No analytics, no telemetry, no crash reports.
 - We only talk to the APIs you explicitly connect: Figma, Jira, GitHub, and Trello.
 - Your tokens live in the macOS Keychain. Your IDs live in your local UserDefaults.
-- Cached items live in your app's Application Support folder, pruned after 30 days.
+- Cached items live in your app's sandboxed Application Support folder, pruned after 30 days.
 - No data is ever sent to us. There is no "us" server.
 
 ---
@@ -35,7 +38,7 @@ The app handles only data you provide it directly:
 | GitHub Repo Allow-list (optional) | Filter for the GitHub Search API query | UserDefaults | Same |
 | Trello API Key | Query string `?key=…` on Trello API requests | macOS Keychain | Same |
 | Trello User Token | Query string `?token=…` on Trello API requests | macOS Keychain | Same |
-| Cached digest items | Offline display + new-item detection | `~/Library/Application Support/cache/items.json` | Items older than 30 days are pruned on every save |
+| Cached digest items | Offline display + new-item detection | App sandbox: `~/Library/Containers/com.designstandupbot/Data/Library/Application Support/cache/items.json` | Items older than 30 days are pruned on every save |
 | Notification preferences | Per-source enable flags | UserDefaults | Same |
 | Snooze + read state | Local UX state | Cached items JSON | Snooze resets at midnight; read state preserved |
 
@@ -86,7 +89,7 @@ their services subject to their own terms:
 - **GitHub**: <https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement>
 - **Trello (Atlassian)**: <https://www.atlassian.com/legal/privacy-policy>
 
-Design Standup Bot does not have its own user account, server, or backend.
+Design Standup does not have its own user account, server, or backend.
 There is no third-party processor.
 
 ---
@@ -114,19 +117,15 @@ The app does **not** request:
   This deletes the token from Keychain and the IDs/URLs from UserDefaults.
 - **Stop notifications** — Settings → toggle "Enable notifications" off, or
   revoke at the system level.
-- **Delete all local data** — quit the app and delete:
-  - `~/Library/Application Support/cache/items.json` (cached items)
-  - The app's UserDefaults plist (preferences + IDs)
-  - The relevant Keychain entries (`com.designstandupbot.figma.token`,
-    `com.designstandupbot.jira.token`, `com.designstandupbot.github.token`,
-    `com.designstandupbot.trello.apiKey`, `com.designstandupbot.trello.token`)
-  Or simply uninstall the app and clear those locations.
+- **Delete all local data** — quit the app and remove the app bundle. The sandbox
+  container at `~/Library/Containers/com.designstandupbot/` contains all app data
+  and is removed when you drag the app to Trash and empty it.
 
 ---
 
 ## Children
 
-Design Standup Bot is a professional tool. It is not directed at children under 13
+Design Standup is a professional tool. It is not directed at children under 13
 and does not knowingly collect data from them.
 
 ---
