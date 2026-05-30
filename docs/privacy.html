@@ -178,7 +178,7 @@
     /* Data table */
     .data-table-wrap {
       overflow-x: auto;
-      margin: 20px 0 24px;
+      margin: 20px 0 8px;
       border-radius: 10px;
       border: 1px solid var(--border);
     }
@@ -186,26 +186,47 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 14px;
+      table-layout: fixed;
     }
+    col.col-data  { width: 32%; }
+    col.col-why   { width: 42%; }
+    col.col-where { width: 26%; }
     th {
       text-align: left;
       padding: 12px 16px;
       background: var(--surface);
       color: var(--text-faint);
       font-weight: 600;
-      font-size: 12px;
-      letter-spacing: 0.04em;
+      font-size: 11px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      white-space: nowrap;
     }
     td {
-      padding: 12px 16px;
+      padding: 11px 16px;
       color: var(--text-muted);
       border-top: 1px solid var(--border);
       vertical-align: top;
+      line-height: 1.5;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+    td:first-child {
+      font-weight: 500;
+      color: var(--text);
+    }
+    td:last-child code {
+      display: inline-block;
+      word-break: break-all;
+      overflow-wrap: anywhere;
     }
     td code { font-size: 12px; }
     tr:last-child td { border-bottom: none; }
+    .table-note {
+      font-size: 13px;
+      color: var(--text-faint);
+      margin-bottom: 24px;
+      padding-left: 4px;
+    }
 
     /* Footer */
     footer {
@@ -262,12 +283,16 @@
 
       <div class="data-table-wrap">
         <table>
+          <colgroup>
+            <col class="col-data">
+            <col class="col-why">
+            <col class="col-where">
+          </colgroup>
           <thead>
             <tr>
               <th>Data</th>
               <th>Why</th>
               <th>Stored where</th>
-              <th>Retention</th>
             </tr>
           </thead>
           <tbody>
@@ -275,89 +300,76 @@
               <td>Figma Personal Access Token</td>
               <td>Auth header on Figma API requests</td>
               <td>macOS Keychain</td>
-              <td>Until you Disconnect or remove the app</td>
             </tr>
             <tr>
               <td>Figma Team ID</td>
               <td>URL path for Figma API</td>
               <td>UserDefaults</td>
-              <td>Same</td>
             </tr>
             <tr>
               <td>Figma File Keys (optional)</td>
               <td>URL path for Figma API</td>
               <td>UserDefaults</td>
-              <td>Same</td>
             </tr>
             <tr>
               <td>Jira API Token</td>
               <td>Basic Auth header on Jira API requests</td>
               <td>macOS Keychain</td>
-              <td>Same</td>
             </tr>
             <tr>
               <td>Jira Base URL</td>
               <td>Host for Jira API requests</td>
               <td>UserDefaults</td>
-              <td>Same</td>
             </tr>
             <tr>
               <td>Jira User Email</td>
               <td>Basic Auth identity</td>
               <td>UserDefaults</td>
-              <td>Same</td>
             </tr>
             <tr>
               <td>GitHub Personal Access Token</td>
               <td>Bearer auth header on GitHub API requests</td>
               <td>macOS Keychain</td>
-              <td>Same</td>
             </tr>
             <tr>
               <td>GitHub Enterprise URL (optional)</td>
               <td>Host for GitHub API requests</td>
               <td>UserDefaults</td>
-              <td>Same</td>
             </tr>
             <tr>
               <td>GitHub Repo allow-list (optional)</td>
               <td>Filter for GitHub Search API query</td>
               <td>UserDefaults</td>
-              <td>Same</td>
             </tr>
             <tr>
               <td>Trello API Key</td>
               <td>Query string <code>?key=…</code> on Trello API requests</td>
               <td>macOS Keychain</td>
-              <td>Same</td>
             </tr>
             <tr>
               <td>Trello User Token</td>
               <td>Query string <code>?token=…</code> on Trello API requests</td>
               <td>macOS Keychain</td>
-              <td>Same</td>
             </tr>
             <tr>
               <td>Cached digest items</td>
-              <td>Offline display + new-item detection</td>
-              <td>App sandbox: <code>~/Library/Containers/com.designstandupbot/Data/Library/Application Support/cache/items.json</code></td>
-              <td>Items older than 30 days pruned on every save</td>
+              <td>Offline display + new-item detection. Items older than 30 days are pruned automatically.</td>
+              <td><code>~/Library/Containers/com.designstandupbot/Data/Library/Application Support/cache/items.json</code></td>
             </tr>
             <tr>
               <td>Notification preferences</td>
               <td>Per-source enable flags</td>
               <td>UserDefaults</td>
-              <td>Same</td>
             </tr>
             <tr>
               <td>Snooze + read state</td>
-              <td>Local UX state</td>
+              <td>Local UX state. Snooze resets at midnight; read state is preserved.</td>
               <td>Cached items JSON</td>
-              <td>Snooze resets at midnight; read state preserved</td>
             </tr>
           </tbody>
         </table>
       </div>
+      <p class="table-note">All credentials are retained until you Disconnect the service or remove the app.</p>
 
       <p>No background collection occurs. The app does not request location, contacts, calendar, microphone, camera, or any other system data.</p>
 
